@@ -4,7 +4,7 @@ import MenuItem from './menu/item';
 
 export default () => { return (
     <div id={ 'menu' }>
-        <MenuItem header={ 'BROWSER' } link={ '/pipelines' } />
+        <MenuItem header={ 'BROWSE' } link={ '/pipelines' } />
         <MenuItem header={ 'CREATE' } link={ '/create' } />
     </div>
 )}

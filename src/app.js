@@ -4,8 +4,9 @@ import { Provider } from "./assets/context";
 import './interface/css/general.scss';
 
 import Init from './assets/init';
-import Pages from './assets/pages';
 import Menu from './components/menu';
+import Header from './components/header';
+import Pages from './assets/pages';
 
 export default () => { return (
    <BrowserRouter>
@@ -13,6 +14,7 @@ export default () => { return (
          <Init />
          <div id={ 'wrapper' }>
             <Menu />
+            <Header />
             <Pages />
          </div>
       </Provider>

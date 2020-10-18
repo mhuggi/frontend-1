@@ -3,15 +3,25 @@ const values = {
 
    // DATA
    data: {},
+
+   // PAGE HEADER
+   header: 'default',
 }
 
 // REDUCER
 function reducer(state, { type, payload }) {
    switch (type) {
 
+      // LOADING STATUS
       case 'init': { return {
          ...state,
          data: payload
+      }}
+
+      // SET HEADER
+      case 'header': { return {
+         ...state,
+         header: payload
       }}
       
       // FALLBACK
