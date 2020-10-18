@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from 'react';
 import { Context } from "../assets/context";
 import List from '../components/list';
-//import foobar from '../data/regression.json';
+import foobar from '../data/regression.json';
 //match.params.name
 
 export default ({ match }) => {
@@ -24,7 +24,7 @@ export default ({ match }) => {
                         payload: {
                             type: 'line',
                             header: 'training predictions',
-                            data: []
+                            data: foobar.label
                         }
                     }) }],
                     ['Validation', () => { dispatch({
