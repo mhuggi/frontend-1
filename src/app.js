@@ -5,8 +5,8 @@ import './interface/css/general.scss';
 
 import Init from './assets/init';
 import Menu from './components/menu';
-import Header from './components/header';
 import Pages from './assets/pages';
+import Prompt from './components/prompt';
 
 export default () => { return (
    <BrowserRouter>
@@ -14,9 +14,9 @@ export default () => { return (
          <Init />
          <div id={ 'wrapper' }>
             <Menu />
-            <Header />
             <Pages />
          </div>
+         <Prompt />
       </Provider>
    </BrowserRouter>
 )}

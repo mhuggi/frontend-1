@@ -33,6 +33,12 @@ export default () => {
     }, [])
 
     return (
-        <List data={ pipelines } />
+        <List
+            header={ 'browse available pipelines' }
+            data={ pipelines }
+            type={ 'links' }
+            location={ 'pipelines' }
+            show_count={ true }
+        />
     )
 }

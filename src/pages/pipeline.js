@@ -1,44 +1,61 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { Context } from "../assets/context";
-// import foobar from '../data/regression.json';
+import List from '../components/list';
+//import foobar from '../data/regression.json';
+//match.params.name
 
 export default ({ match }) => {
 
     // GLOBAL STATE
     const { dispatch } = useContext(Context);
 
-    // ON LOAD, SET THE PAGE HEADER
-    useEffect(() => {
-        dispatch({
-            type: 'header',
-            payload: match.params.name
-        })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    function trigger() {
+        console.log('foo')
+    }
 
     return (
-        <div id={ 'horizontal' }>
-            <div>
-                <div id={ 'vertical' }>
-                    <div>
-                        <svg />
-                    </div>
-                    <div>
-                        <svg />
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div id={ 'vertical' }>
-                    <div>
-                        <svg />
-                    </div>
-                    <div>
-                        <svg />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Fragment>
+            <List
+                header={ 'calibrating predictions' }
+                type={ 'triggers' }
+                data={[
+                    ['Training', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'line',
+                            header: 'training predictions',
+                            data: []
+                        }
+                    }) }],
+                    ['Validation', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'bar',
+                            header: 'validation predictions',
+                            data: []
+                        }
+                    }) }]
+                ]}
+            />
+            <List
+                header={ 'regression fitting history' }
+                type={ 'triggers' }
+                data={[
+                    ['Linear Regression', trigger],
+                    ['LSTM', trigger],
+                    ['RCNN', trigger],
+                ]}
+            />
+            <List
+                header={ 'classifier fitting history' }
+                type={ 'triggers' }
+                data={[
+                    ['Logistic Regression', trigger],
+                    ['Random Forest', trigger],
+                    ['Decision Tree', trigger],
+                    ['LSTM', trigger],
+                ]}
+            />
+        </Fragment>
     )
 }

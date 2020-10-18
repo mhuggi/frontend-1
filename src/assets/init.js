@@ -1,10 +1,11 @@
 import { useContext, useEffect } from 'react';
-import { Context } from "./context";
+import { Context } from './context';
+import { sleep } from '../funcs/misc';
 
 export default () => {
    
    // GLOBAL STATE
-   const { state } = useContext(Context);
+   const { dispatch } = useContext(Context);
 
    // LOAD ONCE
    useEffect(() => {
@@ -12,9 +13,11 @@ export default () => {
       // HIDE METAMASK GARBAGE
       window.ethereum.autoRefreshOnNetworkChange = false;
 
-      if (state) {
-         console.log('success')
-      }
+      sleep(1000).then(() => {
+         dispatch({
+            type: 'hide-prompt'
+         })
+      })
 
    // eslint-disable-next-line
    }, [])

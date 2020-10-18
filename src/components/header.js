@@ -1,12 +1,5 @@
-import React, { useContext } from 'react';
-import { Context } from "../assets/context";
+import React from 'react';
 
-export default () => {
-    
-    // GLOBAL STATE
-    const { state } = useContext(Context);
-
-    return (
-        <div id={ 'header' }>{ state.header }</div>
-    )
-}
+export default ({ text }) => { return (
+    <div id={ 'header' }>{ text }</div>
+)}
