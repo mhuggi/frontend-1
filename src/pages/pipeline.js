@@ -1,7 +1,10 @@
 import React, { useContext, Fragment } from 'react';
 import { Context } from "../assets/context";
 import List from '../components/list';
-import foobar from '../data/regression.json';
+import training from '../data/training.json';
+import validation from '../data/validation.json';
+import fitting from '../data/fitting.json';
+import basic_fitting from '../data/basic_fitting.json';
 //match.params.name
 
 export default ({ match }) => {
@@ -24,15 +27,15 @@ export default ({ match }) => {
                         payload: {
                             type: 'line',
                             header: 'training predictions',
-                            data: foobar.label
+                            data: training
                         }
                     }) }],
                     ['Validation', () => { dispatch({
                         type: 'prompt',
                         payload: {
-                            type: 'bar',
+                            type: 'line',
                             header: 'validation predictions',
-                            data: []
+                            data: validation
                         }
                     }) }]
                 ]}
@@ -41,8 +44,22 @@ export default ({ match }) => {
                 header={ 'regression fitting history' }
                 type={ 'triggers' }
                 data={[
-                    ['Linear Regression', trigger],
-                    ['LSTM', trigger],
+                    ['Linear Regression', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'bar',
+                            header: 'LINREG Fitting History',
+                            data: basic_fitting
+                        }
+                    }) }],
+                    ['LSTM', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'line',
+                            header: 'LSTM Fitting History',
+                            data: fitting
+                        }
+                    }) }],
                     ['RCNN', trigger],
                 ]}
             />

@@ -1,9 +1,32 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { withSize } from 'react-sizeme';
 import Plot from 'react-plotly.js';
 import '../../interface/css/plot.scss';
 
 function Foo({ header, data, size }) {
+
+   // LOCAL STATE
+   const [lines, set_lines] = useState([])
+   
+   useEffect(() => {
+      const colours = ['#FF99CC', '#CC99FF', '#99CCFF', '#99FF99', '#FFFF99']
+      const container = []
+      Object.keys(data).forEach((key, index) => {
+         container.push({
+            name: key,
+            x: Object.keys(data[key]),
+            y: Object.values(data[key]),
+            type: 'scatter',
+            mode: 'lines',
+            line: {
+               width: 1,
+               color: colours[index],
+               opacity: 0.8
+            }
+         })
+      })
+      set_lines(container)
+   }, [data])
    
    // STATIC GRID LAYOUT
    const grid_layout = {
@@ -28,7 +51,16 @@ function Foo({ header, data, size }) {
          t: 2,
          pad: 0
       },
-      showlegend: false,
+      showlegend: true,
+      legend: {
+         font: {
+            size: 14,
+            color: 'white'
+         },
+         borderwidth: 2,
+         x: 1.01,
+         y: 0.5
+      },
       xaxis: grid_layout,
       yaxis: {
          ...grid_layout,
@@ -43,18 +75,7 @@ function Foo({ header, data, size }) {
          <div id={ 'header' }>{ header }</div>
          <div id={ 'plot' }>
             <Plot
-               data={[
-                  {
-                     x: Object.keys(data),
-                     y: Object.values(data),
-                     type: 'scatter',
-                     mode: 'lines',
-                     line: {
-                        width: 1,
-                        color: 'white'
-                     }
-                  }
-               ]}
+               data={lines}
                layout={{
                   width: size.width,
                   ...plot_layout
