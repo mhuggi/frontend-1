@@ -4,7 +4,9 @@ import { sleep } from "../funcs/misc";
 import '../interface/css/prompt.scss';
 import EventListener from 'react-event-listener';
 import Bar from './prompt/bar';
+import Multibar from './prompt/multibar';
 import Line from './prompt/line';
+import Matrix from './prompt/matrix';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -66,7 +68,23 @@ function Content({ type, header, data }) {
          return <div className="lds-dual-ring" />
       }
 
-      // CREATE TASK
+      // MULTI BAR CHART
+      case 'matrix': {
+         return <Matrix
+            header={ header }
+            data={ data }
+         />
+      }
+
+      // MULTI BAR CHART
+      case 'multibar': {
+         return <Multibar
+            header={ header }
+            data={ data }
+         />
+      }
+
+      // BAR CHART
       case 'bar': {
          return <Bar
             header={ header }
@@ -74,7 +92,7 @@ function Content({ type, header, data }) {
          />
       }
 
-      // REGISTER DEVICE
+      // LINE CHART
       case 'line': {
          return <Line
             header={ header }

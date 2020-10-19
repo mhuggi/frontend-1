@@ -5,6 +5,9 @@ import training from '../data/training.json';
 import validation from '../data/validation.json';
 import fitting from '../data/fitting.json';
 import basic_fitting from '../data/basic_fitting.json';
+import classification from '../data/classification.json';
+import confusion_matrix from '../data/confusion_matrix.json';
+import matrix_bar from '../data/matrix_bar.json';
 //match.params.name
 
 export default ({ match }) => {
@@ -60,7 +63,22 @@ export default ({ match }) => {
                             data: fitting
                         }
                     }) }],
-                    ['RCNN', trigger],
+                    ['MULTIBAR CLASS', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'multibar',
+                            header: 'classifier result',
+                            data: matrix_bar
+                        }
+                    }) }],
+                    ['MATRIX TEST', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'matrix',
+                            header: 'classifier result',
+                            data: confusion_matrix
+                        }
+                    }) }],
                 ]}
             />
             <List

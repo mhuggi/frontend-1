@@ -1,32 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 import { withSize } from 'react-sizeme';
 import Plot from 'react-plotly.js';
 import '../../interface/css/plot.scss';
 
 function Foo({ header, data, size }) {
-
-   // LOCAL STATE
-   const [lines, set_lines] = useState([])
-   
-   useEffect(() => {
-      const colours = ['#FF99CC', '#CC99FF', '#99CCFF', '#99FF99', '#FFFF99']
-      const container = []
-      Object.keys(data).forEach((key, index) => {
-         container.push({
-            name: key,
-            x: Object.keys(data[key]),
-            y: Object.values(data[key]),
-            type: 'scatter',
-            mode: 'lines',
-            line: {
-               width: 1,
-               color: colours[index],
-               opacity: 0.8
-            }
-         })
-      })
-      set_lines(container)
-   }, [data])
    
    // STATIC GRID LAYOUT
    const grid_layout = {
@@ -51,17 +28,11 @@ function Foo({ header, data, size }) {
          t: 2,
          pad: 0
       },
-      showlegend: true,
-      legend: {
-         font: {
-            size: 14,
-            color: 'white'
-         },
-         borderwidth: 2,
-         x: 1.01,
-         y: 0.5
+      showlegend: false,
+      xaxis: {
+         ...grid_layout,
+         fixedrange: true
       },
-      xaxis: grid_layout,
       yaxis: {
          ...grid_layout,
          fixedrange: true
@@ -75,13 +46,16 @@ function Foo({ header, data, size }) {
          <div id={ 'header' }>{ header }</div>
          <div id={ 'plot' }>
             <Plot
-               data={ lines }
+               data={[{
+                  x: data.x,
+                  y: data.y,
+                  z: data.z,
+                  type: 'heatmap',
+                  text: Object.values(data).map(String),
+               }]}
                layout={{
                   width: size.width,
                   ...plot_layout
-               }}
-               config={{
-                  scrollZoom: true,
                }}
             />
          </div>

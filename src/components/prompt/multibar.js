@@ -6,8 +6,8 @@ import '../../interface/css/plot.scss';
 function Foo({ header, data, size }) {
 
    // LOCAL STATE
-   const [lines, set_lines] = useState([])
-   
+   const [bars, set_bars] = useState([])
+
    useEffect(() => {
       const colours = ['#FF99CC', '#CC99FF', '#99CCFF', '#99FF99', '#FFFF99']
       const container = []
@@ -16,16 +16,20 @@ function Foo({ header, data, size }) {
             name: key,
             x: Object.keys(data[key]),
             y: Object.values(data[key]),
-            type: 'scatter',
-            mode: 'lines',
-            line: {
-               width: 1,
+            type: 'bar',
+            text: Object.values(data[key]).map(String),
+            textfont: {
+               size: 16,
+               color: 'black'
+            },
+            textposition: 'auto',
+            marker: {
                color: colours[index],
-               opacity: 0.8
+               opacity: 0.7
             }
          })
       })
-      set_lines(container)
+      set_bars(container)
    }, [data])
    
    // STATIC GRID LAYOUT
@@ -75,7 +79,7 @@ function Foo({ header, data, size }) {
          <div id={ 'header' }>{ header }</div>
          <div id={ 'plot' }>
             <Plot
-               data={ lines }
+               data={ bars }
                layout={{
                   width: size.width,
                   ...plot_layout
