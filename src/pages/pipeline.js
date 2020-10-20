@@ -1,19 +1,44 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Context } from "../assets/context";
 import List from '../components/list';
-import training from '../data/training.json';
-import validation from '../data/validation.json';
-import fitting from '../data/fitting.json';
-import basic_fitting from '../data/basic_fitting.json';
-import classification from '../data/classification.json';
-import confusion_matrix from '../data/confusion_matrix.json';
-import matrix_bar from '../data/matrix_bar.json';
-//match.params.name
+import axios from 'axios';
+import { chart } from '../funcs/block';
 
 export default ({ match }) => {
 
     // GLOBAL STATE
     const { dispatch } = useContext(Context);
+
+    // LOCAL STATES
+    const [reg_predictions, set_reg_predictions] = useState({})
+    const [cls_train_predictions, set_cls_train_predictions] = useState([])
+    const [cls_test_predictions, set_cls_test_predictions] = useState([])
+
+    const [reg_fittings, set_reg_fittings] = useState([])
+    //const [cls_fittings, set_cls_fittings] = useState([])
+
+    // ON LOAD, FETCH ALL PIPELINES
+    useEffect(() => {
+        axios.get('http://localhost:8000/pipelines/' + match.params.name).then(result => {
+            if (result.status === 200) {
+                console.log(result.data)
+
+                // SET TRAINING & VALIDATION PREDICTIONS
+                set_reg_predictions(result.data.predictions.regression)
+                
+                let temp = chart(result.data.predictions.classifier.training, dispatch)
+                set_cls_train_predictions(temp)
+
+                temp = chart(result.data.predictions.classifier.validation, dispatch)
+                set_cls_test_predictions(temp)
+
+                temp = chart(result.data.fittings.regression, dispatch)
+                set_reg_fittings(temp)
+            }
+        })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     function trigger() {
         console.log('foo')
@@ -22,7 +47,7 @@ export default ({ match }) => {
     return (
         <Fragment>
             <List
-                header={ 'calibrating predictions' }
+                header={ 'regression predictions' }
                 type={ 'triggers' }
                 data={[
                     ['Training', () => { dispatch({
@@ -30,7 +55,7 @@ export default ({ match }) => {
                         payload: {
                             type: 'line',
                             header: 'training predictions',
-                            data: training
+                            data: reg_predictions.training
                         }
                     }) }],
                     ['Validation', () => { dispatch({
@@ -38,48 +63,25 @@ export default ({ match }) => {
                         payload: {
                             type: 'line',
                             header: 'validation predictions',
-                            data: validation
+                            data: reg_predictions.validation
                         }
                     }) }]
                 ]}
             />
             <List
+                header={ 'classifier training predictions' }
+                type={ 'triggers' }
+                data={ cls_train_predictions }
+            />
+            <List
+                header={ 'classifier validation predictions' }
+                type={ 'triggers' }
+                data={ cls_test_predictions }
+            />
+            <List
                 header={ 'regression fitting history' }
                 type={ 'triggers' }
-                data={[
-                    ['Linear Regression', () => { dispatch({
-                        type: 'prompt',
-                        payload: {
-                            type: 'bar',
-                            header: 'LINREG Fitting History',
-                            data: basic_fitting
-                        }
-                    }) }],
-                    ['LSTM', () => { dispatch({
-                        type: 'prompt',
-                        payload: {
-                            type: 'line',
-                            header: 'LSTM Fitting History',
-                            data: fitting
-                        }
-                    }) }],
-                    ['MULTIBAR CLASS', () => { dispatch({
-                        type: 'prompt',
-                        payload: {
-                            type: 'multibar',
-                            header: 'classifier result',
-                            data: matrix_bar
-                        }
-                    }) }],
-                    ['MATRIX TEST', () => { dispatch({
-                        type: 'prompt',
-                        payload: {
-                            type: 'matrix',
-                            header: 'classifier result',
-                            data: confusion_matrix
-                        }
-                    }) }],
-                ]}
+                data={ reg_fittings }
             />
             <List
                 header={ 'classifier fitting history' }

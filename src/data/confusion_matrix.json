@@ -1,7 +1,7 @@
 {
-    "y": ["buy", "sell", "hold"],
-    "x": ["buy", "sell", "hold"],
-    "z": [
+    "labels": ["buy", "sell", "hold"],
+    "predictions": ["hold", "sell", "buy"],
+    "matrix": [
         [55, 61, 3],
         [48, 58, 8],
         [198, 174, 13]

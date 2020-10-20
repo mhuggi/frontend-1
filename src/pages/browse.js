@@ -1,32 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Context } from "../assets/context";
+import React, { useState, useEffect } from 'react';
 import List from '../components/list';
+import axios from 'axios';
 
 export default () => {
-
-    // GLOBAL STATE
-    const { dispatch } = useContext(Context);
 
     // LOCAL STATE
     const [pipelines, set_pipelines] = useState([])
 
-    // ON LOAD
+    // ON LOAD, FETCH ALL PIPELINES
     useEffect(() => {
-        set_pipelines([
-            'PIPELINE-1602803501',
-            'PIPELINE-1602809242',
-            'PIPELINE-1602809548',
-            'PIPELINE-1602852348',
-            'PIPELINE-1602857460',
-            'PIPELINE-1602857897',
-            'PIPELINE-1602858769',
-            'PIPELINE-1602871098'
-        ])
-
-        // SET THE PAGE HEADER
-        dispatch({
-            type: 'header',
-            payload: 'BROWSE AVAILABLE PIPELINES'
+        axios.get('http://localhost:8000/pipelines').then(result => {
+            if (result.status === 200) {
+                set_pipelines(result.data)
+            }
         })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

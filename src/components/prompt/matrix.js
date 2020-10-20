@@ -5,7 +5,7 @@ import '../../interface/css/plot.scss';
 
 function Foo({ header, data, size }) {
    
-   // STATIC GRID LAYOUT
+   // GRID STATE
    const grid_layout = {
       linecolor: 'rgba(124, 213, 255, 0.425)',
       tickcolor: 'rgba(124, 213, 255, 0.425)',
@@ -18,7 +18,7 @@ function Foo({ header, data, size }) {
       }
    }
 
-   // STATIC PLOT LAYOUT
+   // LAYOUT STATE
    const plot_layout = {
       height: 450,
       margin: {
@@ -41,18 +41,40 @@ function Foo({ header, data, size }) {
       paper_bgcolor: 'transparent'
    }
 
+   // HEADMAP LABELS
+   const heatmap_labels = {
+      x: ['buy', 'sell', 'hold', 'buy', 'sell', 'hold', 'buy', 'sell', 'hold'],
+      y: ['buy', 'buy', 'buy', 'sell', 'sell', 'sell', 'hold', 'hold', 'hold'],
+      mode: "text",
+      text: data.matrix.flat().map(String),
+      type: "scattergl",
+      hoverinfo: 'none',
+      textfont: {
+         color: 'white',
+         size: 20
+      }
+   }
+
    return (
       <Fragment>
          <div id={ 'header' }>{ header }</div>
          <div id={ 'plot' }>
             <Plot
                data={[{
-                  x: data.x,
-                  y: data.y,
-                  z: data.z,
-                  type: 'heatmap',
-                  text: Object.values(data).map(String),
-               }]}
+                  x: data.labels,
+                  y: data.predictions,
+                  z: data.matrix,
+                  hoverinfo: 'none',
+                  opacity: 0.7,
+                  colorbar: {
+                     tickcolor: 'white',
+                     tickfont : {
+                        size : 14,
+                        color : 'white'
+                     }
+                  },
+                  type: 'heatmap'
+               }, heatmap_labels]}
                layout={{
                   width: size.width,
                   ...plot_layout
