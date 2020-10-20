@@ -5,9 +5,10 @@ function chart(data, dispatch) {
 
     // LOOP THROUGH KEYS
     Object.keys(data).forEach(name => {
+        console.log(data[name])
 
         // BAR CHART
-        if ('R2' in data[name]) {
+        if (data[name].fold_0 !== undefined && 'R2' in data[name].fold_0) {
             console.log('multibar')
             container.push([
                 name,

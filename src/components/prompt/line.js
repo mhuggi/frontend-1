@@ -61,7 +61,10 @@ function Foo({ header, data, size }) {
          x: 1.01,
          y: 0.5
       },
-      xaxis: grid_layout,
+      xaxis: {
+         ...grid_layout,
+         rangeslider: {}
+      },
       yaxis: {
          ...grid_layout,
          fixedrange: true

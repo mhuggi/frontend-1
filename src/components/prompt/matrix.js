@@ -44,7 +44,7 @@ function Foo({ header, data, size }) {
    // HEADMAP LABELS
    const heatmap_labels = {
       x: ['buy', 'sell', 'hold', 'buy', 'sell', 'hold', 'buy', 'sell', 'hold'],
-      y: ['buy', 'buy', 'buy', 'sell', 'sell', 'sell', 'hold', 'hold', 'hold'],
+      y: ['hold', 'hold', 'hold', 'sell', 'sell', 'sell', 'buy', 'buy', 'buy'],
       mode: "text",
       text: data.matrix.flat().map(String),
       type: "scattergl",
@@ -64,8 +64,8 @@ function Foo({ header, data, size }) {
                   x: data.labels,
                   y: data.predictions,
                   z: data.matrix,
-                  hoverinfo: 'none',
                   opacity: 0.7,
+                  hoverinfo: 'none',
                   colorbar: {
                      tickcolor: 'white',
                      tickfont : {

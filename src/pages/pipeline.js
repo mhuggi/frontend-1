@@ -3,6 +3,9 @@ import { Context } from "../assets/context";
 import List from '../components/list';
 import axios from 'axios';
 import { chart } from '../funcs/block';
+import models_profit from '../data/models_profit.json';
+import matrix_bar from '../data/matrix_bar.json';
+import linreg from '../data/linreg.json';
 
 export default ({ match }) => {
 
@@ -64,6 +67,28 @@ export default ({ match }) => {
                             type: 'line',
                             header: 'validation predictions',
                             data: reg_predictions.validation
+                        }
+                    }) }],
+                    ['Profit Test', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'line',
+                            header: 'validation predictions',
+                            data: {
+                                //close: Object.values(models_profit.close),
+                                gauss_nb: Object.values(models_profit.gauss_nb_profit),
+                                random_forest: Object.values(models_profit.random_forest_profit),
+                                logreg: Object.values(models_profit.logreg_profit),
+                                svc: Object.values(models_profit.svc_profit),
+                            }
+                        }
+                    }) }],
+                    ['Multibar Test', () => { dispatch({
+                        type: 'prompt',
+                        payload: {
+                            type: 'multibar',
+                            header: 'validation predictions',
+                            data: linreg
                         }
                     }) }]
                 ]}

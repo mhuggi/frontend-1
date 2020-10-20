@@ -17,12 +17,14 @@ function Foo({ header, data, size }) {
             x: Object.keys(data[key]),
             y: Object.values(data[key]),
             type: 'bar',
-            text: Object.values(data[key]).map(String),
+            text: Object.values(data[key]).map(value => {
+               return String(value).substring(0, 5)
+            }),
             textfont: {
-               size: 16,
-               color: 'black'
+               size: 14,
+               color: 'white'
             },
-            textposition: 'auto',
+            textposition: 'outside',
             marker: {
                color: colours[index],
                opacity: 0.7
@@ -68,7 +70,8 @@ function Foo({ header, data, size }) {
       xaxis: grid_layout,
       yaxis: {
          ...grid_layout,
-         fixedrange: true
+         fixedrange: true,
+         range: [0.97, 1   ],
       },
       plot_bgcolor: 'rgba(124, 213, 255, 0.11)',
       paper_bgcolor: 'transparent'
