@@ -2,11 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from "../assets/context";
 import { sleep } from "../funcs/misc";
 import '../interface/css/prompt.scss';
+
+import Multibar from './graphs/multibar';
+import Line from './graphs/line';
+import Matrix from './graphs/matrix';
+
 import EventListener from 'react-event-listener';
-import Bar from './prompt/bar';
-import Multibar from './prompt/multibar';
-import Line from './prompt/line';
-import Matrix from './prompt/matrix';
+import Plot from 'react-plotly.js';
 
 // PROMPT CONTAINER
 function Prompt() {
@@ -73,6 +75,7 @@ function Content({ type, header, data }) {
          return <Matrix
             header={ header }
             data={ data }
+            Plot={ Plot }
          />
       }
 
@@ -81,14 +84,7 @@ function Content({ type, header, data }) {
          return <Multibar
             header={ header }
             data={ data }
-         />
-      }
-
-      // BAR CHART
-      case 'bar': {
-         return <Bar
-            header={ header }
-            data={ data }
+            Plot={ Plot }
          />
       }
 
@@ -97,6 +93,7 @@ function Content({ type, header, data }) {
          return <Line
             header={ header }
             data={ data }
+            Plot={ Plot }
          />
       }
 

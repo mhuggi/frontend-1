@@ -11,7 +11,7 @@ export default () => {
    useEffect(() => {
 
       // HIDE METAMASK GARBAGE
-      // window.ethereum.autoRefreshOnNetworkChange = false;
+      window.ethereum.autoRefreshOnNetworkChange = false;
 
       sleep(1000).then(() => {
          dispatch({

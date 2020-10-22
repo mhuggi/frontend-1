@@ -34,6 +34,8 @@ function Row({ type, value, location }) {
         )}
 
         // FALLBACK
-        default: { return null }
+        default: { return (
+            <div id={ 'row' }>{ value }</div>
+        )}
     }
 }

@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { withSize } from 'react-sizeme';
-import Plot from 'react-plotly.js';
 import '../../interface/css/plot.scss';
 
-function Foo({ header, data, size }) {
+function Foo({ header, data, size, Plot }) {
 
    // LOCAL STATE
    const [bars, set_bars] = useState([])

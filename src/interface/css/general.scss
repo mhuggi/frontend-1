@@ -27,6 +27,23 @@ a:hover {
    text-decoration: none;
 }
 
+// SPLIT TABLE
+.split {
+   display: table;
+   width: 100%;
+
+   div {
+       display: table-cell;
+       width: auto;
+       text-align: left;
+       vertical-align: top;
+   }
+
+   div:nth-child(2) {
+       text-align: right;
+   }
+}
+
 #wrapper {
    display: flex;
    flex-direction: column;
